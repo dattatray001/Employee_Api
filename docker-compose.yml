@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  app:
+    build: .  # This will build the app from the Dockerfile in the current directory
+    ports:
+      - "8080:8080"
+    networks:
+      - s-network
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: sample
+    ports:
+      - "5432:5432"
+    networks:
+      - s-network
+    volumes:
+      - postgres-emp-volume:/var/lib/postgresql/data
+
+networks:
+  s-network:
+    driver: bridge
+
+volumes:
+  postgres-emp-volume:
